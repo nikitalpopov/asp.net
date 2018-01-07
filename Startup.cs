@@ -42,7 +42,7 @@ namespace asp.net
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=First}/{id?}");
             });
         }
     }

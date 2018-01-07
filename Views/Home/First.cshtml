@@ -1,18 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "asp.net";
+    ViewData["Title"] = "first";
+    String selectedFunction = ViewData["function"].ToString();
+    String selectedFunctionName = "";
+    String source = "images/";
+    switch (selectedFunction)
+    {
+        case ("1"):
+            source = source + "first.svg";
+            selectedFunctionName = "Schaffer";
+            ViewData["Title"] = "Schaffer";
+            break;
+        case ("2"):
+            source = source + "second.svg";
+            selectedFunctionName = "Sphere";
+            ViewData["Title"] = "Sphere";
+            break;
+        case ("3"):
+            source = source + "third.svg";
+            selectedFunctionName = "Griewank";
+            ViewData["Title"] = "Griewank";
+            break;
+        case ("4"):
+            source = source + "fourth.svg";
+            selectedFunctionName = "Rastrigin";
+            ViewData["Title"] = "Rastrigin";
+            break;
+        case ("5"):
+            source = source + "fifth.svg";
+            selectedFunctionName = "Rosenbrock";
+            ViewData["Title"] = "Rosenbrock";
+            break;
+    }
 }
-    
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-    </div>
-</div>
+
+
+<h1>Choose function</h1>
+<p>
+    <select class="target">
+        <option id="1">Schaffer</option>
+        <option id="2">Sphere</option>
+        <option id="3">Griewank</option>
+        <option id="4">Rastrigin</option>
+        <option id="5">Rosenbrock</option>
+    </select>
+</p>
+
+<h2>@selectedFunctionName</h2> <img class="formula" height="70px" src=@source />
+
+<script>
+    var select = document.getElementById("target");
+    var selectedFunction = select.options[select.selectedIndex].value;
+    alert(selectedFunction)
+</script>

@@ -10,19 +10,22 @@ namespace asp.net.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult First()
         {
+            ViewData["function"] = HttpContext.Request.Query["function"];
+            if ((ViewData["function"]).ToString().Length < 1) ViewData["function"] = "1";
+
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Second()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Third()
         {
             ViewData["Message"] = "Your contact page.";
 
