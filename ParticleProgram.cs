@@ -18,7 +18,6 @@ namespace asp.net
             double[] bestPosition = Solve(dimensions, particleCount, minX, maxX, maxEpochs, minAcceptedError, errorFunction, 
                 out Particle[] finalSwarm, out double finalEpoch, out double minError, out double[] errors);
 
-            // Show final swarm results
             System.Diagnostics.Debug.WriteLine(@"Processing complete");
             System.Diagnostics.Debug.WriteLine(@"Final swarm:");
             //foreach (Particle t in finalSwarm)
@@ -47,7 +46,7 @@ namespace asp.net
             Func<double[], double> errorFunction, out Particle[] swarm, out double epoch, out double minError, out double[] errors)
         {
             Random random = new Random(0);
-            double magicMultiplier = 0.1; // TODO: why 0.1?
+            double magicMultiplier = 0.1;
 
             swarm = new Particle[particleCount];
             double[] bestGlobalPosition = new double[dimensions];
@@ -78,7 +77,7 @@ namespace asp.net
             }
 
             // Prepare
-            double w = 0.729; // Inertia weight. see http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=00870279
+            double w = 0.729;
             double c1 = 1.49445; // Cognitive/local weight
             double c2 = 1.49445; // Social/global weight
             double deathProbability = 0.01;
@@ -87,7 +86,7 @@ namespace asp.net
             double[] newPosition = new double[dimensions];
             double[] currErrors = new double[maxEpochs];
             
-            while (epoch < maxEpochs && minGlobalError > minAcceptedError) // Main execution
+            while (epoch < maxEpochs && minGlobalError > minAcceptedError)
             {
                 foreach (Particle currentParticle in swarm)
                 {
@@ -131,7 +130,7 @@ namespace asp.net
                         currentParticle.Position.CopyTo(currentParticle.BestPosition, 0);
                         currentParticle.BestError = currentParticle.Error;
 
-                        if (currentParticle.Error < minGlobalError) // global best by chance?
+                        if (currentParticle.Error < minGlobalError)
                         {
                             minGlobalError = currentParticle.Error;
                             currentParticle.Position.CopyTo(bestGlobalPosition, 0);

@@ -79,6 +79,7 @@ namespace asp.net.Controllers
                                        );
                     break;
                 default:
+                    ViewData["result"] = new Array[0];
                     ViewData["some"] = "default";
                     break;
 
