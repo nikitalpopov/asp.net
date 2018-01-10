@@ -1,54 +1,128 @@
 ﻿@{
-    ViewData["Title"] = "first";
-    String selectedFunction = ViewData["function"].ToString();
-    String selectedFunctionName = "";
-    String source = "images/";
-    switch (selectedFunction)
-    {
-        case ("1"):
-            source = source + "first.svg";
-            selectedFunctionName = "Schaffer";
-            ViewData["Title"] = "Schaffer";
-            break;
-        case ("2"):
-            source = source + "second.svg";
-            selectedFunctionName = "Sphere";
-            ViewData["Title"] = "Sphere";
-            break;
-        case ("3"):
-            source = source + "third.svg";
-            selectedFunctionName = "Griewank";
-            ViewData["Title"] = "Griewank";
-            break;
-        case ("4"):
-            source = source + "fourth.svg";
-            selectedFunctionName = "Rastrigin";
-            ViewData["Title"] = "Rastrigin";
-            break;
-        case ("5"):
-            source = source + "fifth.svg";
-            selectedFunctionName = "Rosenbrock";
-            ViewData["Title"] = "Rosenbrock";
-            break;
+    String selectedFunctionName = ViewData["function"].ToString();
+    String source = "images/" + selectedFunctionName + ".svg";
+    if (selectedFunctionName == "") 
+    { 
+        ViewData["Title"] = "main"; 
+    } else { 
+        ViewData["Title"] = selectedFunctionName; 
     }
+
+    Console.WriteLine(ViewData["result"]);
 }
 
-
-<h1>Choose function</h1>
-<p>
-    <select class="target">
-        <option id="1">Schaffer</option>
-        <option id="2">Sphere</option>
-        <option id="3">Griewank</option>
-        <option id="4">Rastrigin</option>
-        <option id="5">Rosenbrock</option>
-    </select>
-</p>
-
-<h2>@selectedFunctionName</h2> <img class="formula" height="70px" src=@source />
+<br>
+<div class="row">
+    <div class="col-lg-7">
+        <p>
+            <select class="target" id="select">
+                <option selected disabled>- Choose function -</option>
+                <option id="1">Schaffer</option>
+                <option id="2">Sphere</option>
+                <option id="3">Griewank</option>
+                <option id="4">Rastrigin</option>
+                <option id="5">Rosenbrock</option>
+            </select>
+        </p>
+        <h2>@selectedFunctionName</h2>
+       <img class="formula" height="70px" src=@source alt="" />
+    </div>
+    <div class="col-lg-5">
+        <div>
+            <p style="display: inline-block;">Dimensions: </p> 
+            <input id="dimensions" style="display: inline-block;" placeholder="int value"/>
+        </div>
+        <div>
+            <p style="display: inline-block;">Particles count: </p> 
+            <input id="particleCount" style="display: inline-block;" placeholder="int value" />
+        </div>
+        <div>
+            <p style="display: inline-block;">Max epochs: </p> 
+            <input id="maxEpochs" style="display: inline-block;" placeholder="int value" />
+        </div>
+        <div>
+            <b style="display: inline-block;">x</b>
+            <p style="display: inline-block;"> from: </p> 
+            <input id="minX" style="display: inline-block;" placeholder="double value" /> 
+            <p style="display: inline-block;">to: </p> 
+            <input id="maxX" style="display: inline-block;" placeholder="double value" />
+        </div>
+        <div>
+            <p style="display: inline-block;">Minimal accepted error: </p> 
+            <input id="minAccError" style="display: inline-block;" placeholder="double value" />
+        </div>
+        <button class="btn btn-success" id="apply" width="300px">Apply</button>
+    </div>
+    <div class="col-lg-12" style="margin-top: 10px;">
+        <canvas id="canvas"></canvas>
+    </div>
+</div>
 
 <script>
-    var select = document.getElementById("target");
-    var selectedFunction = select.options[select.selectedIndex].value;
-    alert(selectedFunction)
+var errors = new Array();
+@foreach (var d in (ViewData["result"] as Array))
+{
+    @:errors.push("@d");
+}
+var labels = Array.from(new Array(errors.length),(val, index) => index.toString());
+    
+var config = {
+    type: 'line',
+    data: {
+       labels: labels,
+        datasets: [{
+            label: "Error Value",
+            data: errors,
+            fill: true,
+        }]
+    },
+    options: {
+        responsive: true,
+            title: {
+            display: true,
+                text: 'Function Error Value'
+        },
+        tooltips: {
+            mode: 'index',
+                intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+                intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Epoch'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Error Value'
+                }
+            }]
+        }
+    }
+};
+
+window.onload = function () {
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx, config);
+};
+
+    
+document.getElementById("apply").onclick = function () {
+    var func = document.getElementById("select").options[select.selectedIndex].value;
+    var dimensions = document.getElementById("dimensions").value;
+    var particleCount = document.getElementById("particleCount").value;
+    var maxEpochs = document.getElementById("maxEpochs").value;
+    var minX = document.getElementById("minX").value;
+    var maxX = document.getElementById("maxX").value;
+    var minAccError = document.getElementById("minAccError").value;
+    window.location.replace("?func=" + func + "&dimensions=" + dimensions + "&particleCount=" + particleCount + "&maxEpochs=" + maxEpochs + "&minX=" + minX + "&maxX=" + maxX + "&minAccError=" + minAccError);
+};
 </script>

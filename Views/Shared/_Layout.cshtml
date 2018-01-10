@@ -30,22 +30,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="First">first</a></li>
+                    <!--<li><a asp-area="" asp-controller="Home" asp-action="First">first</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Second">second</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Third">third</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Third">third</a></li>-->
+                    <li><a asp-area="" asp-controller="Home">metaheuristics project</a></li>
+                    <li><a asp-area="" asp-controller="Home">partical swarm optimization</a></li>
                 </ul>
             </div>
-        </div>
+         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - asp.net</p>
+            <p>&copy; 2018 - asp.net - <a href="https://github.com/nikitalpopov">nikita.popov</a></p>
         </footer>
     </div>
 
     <environment include="Development">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

@@ -12,22 +12,77 @@ namespace asp.net.Controllers
     {
         public IActionResult First()
         {
-            ViewData["function"] = HttpContext.Request.Query["function"];
-            if ((ViewData["function"]).ToString().Length < 1) ViewData["function"] = "1";
+            ViewData["function"] = HttpContext.Request.Query["func"];
+            ViewData["result"] = null;
+            if ((ViewData["function"]).ToString().Length < 1)
+            {
+                ViewData["function"] = "";
+            }
 
-            return View();
-        }
+            string switcher = ViewData["function"].ToString();
 
-        public IActionResult Second()
-        {
-            ViewData["Message"] = "Your application description page.";
+            switch (switcher)
+            {
+                case "Schaffer":
+                    ViewData["some"] = "1";
+                    ViewData["result"] = asp.net.ParticleProgram.Run(asp.net.Functions.schaffer,
+                                        Convert.ToInt32(HttpContext.Request.Query["dimensions"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["particleCount"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["maxEpochs"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["maxX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minAccError"])
+                                       );
+                    break;
+                case "Sphere":
+                    ViewData["some"] = "2";
+                    ViewData["result"] = asp.net.ParticleProgram.Run(asp.net.Functions.sphere,
+                                        Convert.ToInt32(HttpContext.Request.Query["dimensions"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["particleCount"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["maxEpochs"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["maxX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minAccError"])
+                                       );
+                    break;
+                case "Griewank":
+                    ViewData["some"] = "3";
+                    ViewData["result"] = asp.net.ParticleProgram.Run(asp.net.Functions.griewank,
+                                        Convert.ToInt32(HttpContext.Request.Query["dimensions"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["particleCount"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["maxEpochs"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["maxX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minAccError"])
+                                       );
+                    break;
+                case "Rastrigin":
+                    ViewData["some"] = "4";
+                    ViewData["result"] = asp.net.ParticleProgram.Run(asp.net.Functions.rastrigin,
+                                        Convert.ToInt32(HttpContext.Request.Query["dimensions"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["particleCount"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["maxEpochs"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["maxX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minAccError"])
+                                       );
+                    break;
+                case "Rosenbrock":
+                    ViewData["some"] = "5";
+                    ViewData["result"] = asp.net.ParticleProgram.Run(asp.net.Functions.rosenbrock,
+                                        Convert.ToInt32(HttpContext.Request.Query["dimensions"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["particleCount"]),
+                                        Convert.ToInt32(HttpContext.Request.Query["maxEpochs"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["maxX"]),
+                                        Convert.ToDouble(HttpContext.Request.Query["minAccError"])
+                                       );
+                    break;
+                default:
+                    ViewData["some"] = "default";
+                    break;
 
-            return View();
-        }
-
-        public IActionResult Third()
-        {
-            ViewData["Message"] = "Your contact page.";
+            }
 
             return View();
         }
